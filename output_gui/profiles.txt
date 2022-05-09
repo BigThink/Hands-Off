@@ -1,0 +1,2 @@
+Dataman|{"Palm": "ctrl+f"}
+Stevie|{"OK": "ctrl+c"}
