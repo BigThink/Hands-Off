@@ -1,2 +1,2 @@
 # Hands-Off
-mediapipe hand gesture thing for 491
+TODO: Create a better Readme to display to viewers
