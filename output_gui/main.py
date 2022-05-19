@@ -1,7 +1,7 @@
 import cv2
-from output_gui.profile_window import *
-from output_gui.register_gestures import register_gesture
-from output_gui.settings_menu import settings_menu
+from profile_window import *
+from register_gestures import register_gesture
+from settings_menu import settings_menu
 from Help import help_window
 import database
 import globals
@@ -77,9 +77,7 @@ def main_menu(global_vars):
             settings_menu(global_vars, indexList)
             cap = cv2.VideoCapture(global_vars.get_camIndex())
         if event == "profile":
-
             profile_menu(global_vars)
-            current_profile = None
             current_profile = get_current_profile(global_vars.get_selectedProf())
 
         if event == "start":

@@ -56,7 +56,9 @@ def profile_menu(global_vars):
 
         # this option to duplicate profile to other username
         if event == "Duplicate Profile":
-            duplicate_profile()
+            duplicate_profile(profiles, profile_names)
+            index = len(profile_names) - 1
+            window.Element("selectedprof").update(values=profile_names, set_to_index=index)
         if event == "Print":
             for x in profiles:
                 if x.equals(values["selectedprof"]):
@@ -187,9 +189,6 @@ def create_profile(global_vars):
     added_gestures = []
     added_actions = []
 
-    # List to store text representations of mappings. Adding
-    map_list = []
-
     layout = [
         [sg.Text("Profile Name:"), sg.InputText(key="name", tooltip="New profile's name")],
         [sg.Text("Link Gestures to System Actions", justification='center'),
@@ -252,15 +251,12 @@ def create_profile(global_vars):
 
 
 # function to duplicate profile from the stored file list
-def duplicate_profile():
+def duplicate_profile(profs, names):
     # user profile can be duplicated from drop down menu
-    user_profile = ["Keith", "Bob", "Steve", "David"]
-    # the list stored new username
-    new_username = []
+    user_profile = profs
     layout = [
-        # Todo: choose which stored file from drop down menu.
         [sg.Text("Choose which user profile to duplicate:")],
-        [sg.DropDown(user_profile, default_value="stored profile here", expand_x=True)],
+        [sg.DropDown(names, default_value="stored profile here", expand_x=True)],
         [sg.Text("Enter the new user name:  ", size=(20, 1)), sg.InputText(key="name")],
         [sg.Button("Save", ), sg.Cancel()]
     ]
@@ -271,12 +267,16 @@ def duplicate_profile():
         event, values = window.read()
         if event == "Cancel" or event == sg.WIN_CLOSED:
             break
-        if event == "Save":
-            if values != " ":
-                # TODO: save the duplicated profile with new user name.
-                # dropdown list for user profile fixed, but the new username need to matching with the old profile
-                p = profile.Profile(values["name"], None)
-                print("The Profile with new user name: " + p.name + " created")
+        if event == "Save" and values["name"]:
+            for i in user_profile:
+                if i.name == values[0]:
+                    new_map = dict.copy(i.mapping)
+                    break
+            new_username = values["name"]
+            p = profile.Profile(new_username, new_map)
+            names.append(values["name"])
+            profiles.append(p)
+            profile.write_profile_local(p)
 
             break
 
