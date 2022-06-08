@@ -6,6 +6,7 @@ from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 import keyboard
 import win32api
 
+## TODO: Make this nicer :/
 
 def media_control(value):
     code = win32api.MapVirtualKey(value, 0)
